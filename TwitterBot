@@ -1,0 +1,37 @@
+from picamera import PiCamera
+from time import sleep
+import sys
+from twython import Twython
+
+camera = PiCamera()
+APP_SECRET = 'AlOLnJPPZwZXgCcVbTbeiglrd0qPribVuCSpNGDU0ZiaXgK4lp'
+ACCESS_KEY = '786240480577105920-hIAFiGhWCwM86xy36KQ2N8X32WCR3R7'
+ACCESS_SECRET = '1keXVHYdmeiT7EvXiKLkDKPlU3KJNkI3pbyqJVRdAXVzW'
+
+camera.start_preview(alpha=200)
+sleep(5)
+camera.capture('/home/pi/Desktop/image.jpg')
+camera.stop_preview()
+
+twitter = Twython(APP_KEY,APP_SECRET,ACCESS_KEY,ACCESS_SECRET)
+
+photo = open('/home/pi/Desktop/image.jpg', 'rb')
+response = twitter.upload_media(media=photo)
+twitter.update_status(status='Hello World!', media_ids=[response['media_id']])
+
+import datetime
+import time
+from apscheduler.scheduler import Scheduler
+
+# Start the scheduler
+sched = Scheduler()
+sched.daemonic = False
+sched.start()
+
+def job_function():
+    print("Hello World")
+    print(datetime.datetime.now())
+    time.sleep(20)
+
+# Schedules job_function to be run once every 15 minutes
+sched.add_cron_job(job_function,  minute='15-0')
