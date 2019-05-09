@@ -1,4 +1,7 @@
+# I have added few comments, feel free to delete them after making the changes. I would recommend not having spaces in the filename! 
+
 from sense_hat import SenseHat
+# SEnseHat() should be SenseHat() the "e" should be lowercase
 sense = SEnseHat()
 
 sense.show_message("Welcome to Joe Walker STEAM Night!")
@@ -21,4 +24,5 @@ crescent_moon = [
     b, b, y, y, y, y, b, b,
 ]
 
-    sense.set_pixels(crescent_moon)
+# this part was indented too much, it doesn't need to be indented! 
+sense.set_pixels(crescent_moon)
